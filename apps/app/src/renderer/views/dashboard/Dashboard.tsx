@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
         }
     });
 
-    const handleOpenRoadmap = () => {
+    const handleSeeMoreRoadmap = () => {
         window.location.href = '../roadmap/roadmap.html';
     };
 
@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
                     <div className="card roadmap-card">
                         <div className="card-header">
                             <span>로드맵</span>
-                            <span className="more" onClick={handleOpenRoadmap} style={{ cursor: 'pointer' }}>자세히 보기</span>
+                            <span className="more" onClick={handleSeeMoreRoadmap} style={{ cursor: 'pointer' }}>자세히 보기</span>
                         </div>
                         <div className="card-body">
                             <ul className="roadmap-list">

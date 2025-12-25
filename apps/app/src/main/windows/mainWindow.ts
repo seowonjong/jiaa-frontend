@@ -39,6 +39,17 @@ export const createMainWindow = (): void => {
 
     mainWindow.webContents.openDevTools({ mode: 'detach' });
 
+    // Debugging Listeners
+    mainWindow.webContents.on('did-finish-load', () => {
+        const currentUrl = mainWindow.webContents.getURL();
+        console.log(`[Main] Window finished loading: ${currentUrl}`);
+    });
+
+    mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription, validatedURL) => {
+        console.error(`[Main] Window FAILED to load: ${validatedURL}`);
+        console.error(`[Main] Error: ${errorDescription} (${errorCode})`);
+    });
+
     mainWindow.on('closed', () => {
         setMainWindow(null);
     });
@@ -78,10 +89,15 @@ export const loadSigninPage = (): void => {
 export const loadSignupPage = (): void => {
     const mainWindow = getMainWindow();
     if (mainWindow && !mainWindow.isDestroyed()) {
+        const url = MAIN_WINDOW_VITE_DEV_SERVER_URL
+            ? `${MAIN_WINDOW_VITE_DEV_SERVER_URL}/views/signup/signup.html`
+            : path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/views/signup/signup.html`);
+
+        console.log(`[Main] Navigating to Signup: ${url}`);
         if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-            mainWindow.loadURL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}/views/signup/signup.html`);
+            mainWindow.loadURL(url);
         } else {
-            mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/views/signup/signup.html`));
+            mainWindow.loadFile(url);
         }
     }
 };

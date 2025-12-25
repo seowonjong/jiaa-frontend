@@ -7,6 +7,9 @@ export default defineConfig({
     root: 'src/renderer',
     base: './',
     plugins: [react()],
+    optimizeDeps: {
+        exclude: ['@repo/ui'],
+    },
     build: {
         outDir: '../../.vite/renderer/main_window',
         rollupOptions: {
@@ -16,6 +19,7 @@ export default defineConfig({
                 signup: resolve(__dirname, 'src/renderer/views/signup/signup.html'),
                 dashboard: resolve(__dirname, 'src/renderer/views/dashboard/dashboard.html'),
                 roadmap: resolve(__dirname, 'src/renderer/views/roadmap/roadmap.html'),
+                roadmap_detail: resolve(__dirname, 'src/renderer/views/roadmap-detail/detail.html'),
                 setting: resolve(__dirname, 'src/renderer/views/setting/setting.html'),
             },
         },
